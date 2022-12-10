@@ -1,3 +1,14 @@
+# Project Files
+*.htm
+*.lnp
+*.iex
+*.axf
+*.dbgconf
+
+# User Specific Files
+*.yeshv
+
+
 # Prerequisites
 *.d
 
@@ -6,6 +17,7 @@
 *.ko
 *.obj
 *.elf
+*.dep
 
 # Linker output
 *.ilk
@@ -50,3 +62,7 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+projects/peer1/RTE/Device/STM32F401CCUx/.startup_stm32f401xc.s@2.6.2
+projects/peer1/RTE/Device/STM32F401CCUx/.system_stm32f4xx.c@2.6.3
+projects/peer1/RTE/CMSIS/.RTX_Config.c@5.1.1
+projects/peer1/RTE/CMSIS/.RTX_Config.h@5.5.2
