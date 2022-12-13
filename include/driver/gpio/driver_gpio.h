@@ -32,8 +32,60 @@ typedef struct {
     uint8_t gpio_pinAltFunMode;     /*< possible values from @gpio_pinAltFun  >*/
 } driver_gpio_config_t;
 
+enum gpio_pinNumbers {
+    GPIO_PIN_0,     /*< GPIO Pin number 0  >*/
+    GPIO_PIN_1,     /*< GPIO Pin number 1  >*/
+    GPIO_PIN_2,     /*< GPIO Pin number 2  >*/
+    GPIO_PIN_3,     /*< GPIO Pin number 3  >*/
+    GPIO_PIN_4,     /*< GPIO Pin number 4  >*/
+    GPIO_PIN_5,     /*< GPIO Pin number 5  >*/
+    GPIO_PIN_6,     /*< GPIO Pin number 6  >*/
+    GPIO_PIN_7,     /*< GPIO Pin number 7  >*/
+    GPIO_PIN_8,     /*< GPIO Pin number 8  >*/
+    GPIO_PIN_9,     /*< GPIO Pin number 9  >*/
+    GPIO_PIN_10,    /*< GPIO Pin number 10 >*/    
+    GPIO_PIN_11,    /*< GPIO Pin number 11 >*/    
+    GPIO_PIN_12,    /*< GPIO Pin number 12 >*/    
+    GPIO_PIN_13,    /*< GPIO Pin number 13 >*/
+    GPIO_PIN_14,    /*< GPIO Pin number 14 >*/
+    GPIO_PIN_15,    /*< GPIO Pin number 15 >*/
+};
 
+enum gpio_pinModes {
+    INPUT,
+    OUTPUT,
+    ALTFUN,
+    ANALOG,
+};
 
+enum gpio_pinSpeeds {
+    LOW,
+    MEDIUM,
+    HIGH,
+    VERY_HIGH,
+};
 
+enum gpio_pinPuPdControl {
+    NO_PUPD,
+    PULL_UP,
+    PULL_DOWN,
+};
 
-
+enum gpio_pinAltFunMode {
+    AF0,
+    AF1,
+    AF2,
+    AF3,
+    AF4,
+    AF5,
+    AF6,
+    AF7,
+    AF8,
+    AF9,
+    AF10,
+    AF11,
+    AF12,
+    AF13,
+    AF14,
+    AF15,
+};
