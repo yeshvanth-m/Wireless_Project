@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\include\driver\gpio</IncludePath>
+              <IncludePath>..\..\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
