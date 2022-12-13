@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>..\..\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -392,6 +392,13 @@
         </Group>
         <Group>
           <GroupName>driver</GroupName>
+          <Files>
+            <File>
+              <FileName>driver_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\source\driver\gpio\driver_gpio.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
