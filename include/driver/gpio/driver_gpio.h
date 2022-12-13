@@ -1,6 +1,8 @@
 /********************************************************************************
 * @file     driver_gpio.h                                                       *
 * @brief    GPIO Driver Header File                                             *
+* @author   Yeshvanth M  <yeshvanthmuniraj@gmail.com>                           *
+* @date     13-Dec-2022                                                         *
 *********************************************************************************
 *                                                                               *
 * This program is free software: you can redistribute it and/or modify it       *
@@ -19,3 +21,19 @@
 ********************************************************************************/
 
 #include "stm32f4xx.h"
+
+/* GPIO config structure used by the application to configure a GPIO Pin */
+typedef struct {
+    uint8_t gpio_pinNumber;         /*< possible values from @gpio_pinNumbers >*/
+    uint8_t	gpio_pinMode;           /*< possible values from @gpio_pinModes   >*/
+    uint8_t gpio_pinSpeed;          /*< possible values from @gpio_pinSpeeds  >*/
+    uint8_t gpio_pinPuPdControl;    /*< possible values from @gpio_pinPuPd    >*/
+    uint8_t gpio_pinOpType;         /*< possible values from @gpio_pinOpTypes >*/
+    uint8_t gpio_pinAltFunMode;     /*< possible values from @gpio_pinAltFun  >*/
+} driver_gpio_config_t;
+
+
+
+
+
+

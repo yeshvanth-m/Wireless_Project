@@ -1,6 +1,8 @@
 /********************************************************************************
 * @file     driver_gpio.c                                                       *
 * @brief    File includes implementations of GPIO driver functions.             *
+* @author   Yeshvanth M  <yeshvanthmuniraj@gmail.com>                           *
+* @date     13-Dec-2022                                                         *
 *********************************************************************************
 *                                                                               *
 * This program is free software: you can redistribute it and/or modify it       *
