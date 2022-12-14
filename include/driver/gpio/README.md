@@ -16,11 +16,12 @@ typedef struct {
 } driver_gpio_config_t;
 ```
 
-### 1. API to Initialize the GPIO
+### 1. API to configure the clock for a GPIO instance
 ```
-void driver_gpio_clock_control (bool_t bEnable)
+driver_gpio_clock_control ()
 ```
-- Enables the GPIO peripheral clock by setting the corresponding bit in AHB1ENR
+Brief: Enable or disable the clock for a particular GPIO instance
+- Enables / disables the GPIO peripheral clock by setting / clearing the corresponding bit in AHB1ENR
 - All GPIO peripherals are directly connected to the AHB1 - refer memory map
 - AHB & APB clock control registers are part of RCC group
 
