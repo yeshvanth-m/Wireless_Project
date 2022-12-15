@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'driver_gpio_test_stm32f401' 
+ * Project: 'driver_gpio_test_stm32f429' 
  * Target:  'Simulator' 
  */
 
