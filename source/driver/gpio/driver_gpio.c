@@ -107,42 +107,68 @@ common_rc_t driver_gpio_init (driver_gpio_pinConfig_t* pGpioPin)
     
     if (rc == RC_OK) {
         /* Configure the pin mode */
-        {
+        if (pGpioPin->param.pinMode <= ANALOG) {
             /* Clear the MODER bits for that GPIO pin number */
             pGpioPin->pInst->MODER &= ~(uint32_t)(GPIO_MODER_Clear_Msk << GPIO_MODER_Pos(pGpioPin->param.pinNumber));
             /* Set the MODER bits as required mode for that GPIO pin number */
             pGpioPin->pInst->MODER |= (uint32_t)(pGpioPin->param.pinMode << GPIO_MODER_Pos(pGpioPin->param.pinNumber));
         }
-        /* Configure the pin speed */
-        {
-            /* Clear the OSPEEDR bits for that GPIO pin number */
-            pGpioPin->pInst->OSPEEDR &= ~(uint32_t)(GPIO_OSPEEDR_Clear_Msk << GPIO_OSPEEDR_Pos(pGpioPin->param.pinNumber)); 
-            /* Set the OSPEEDR bits as required speed for that GPIO pin number */
-            pGpioPin->pInst->OSPEEDR |= (uint32_t)(pGpioPin->param.pinSpeed << GPIO_OSPEEDR_Pos(pGpioPin->param.pinNumber));
+        else {
+            rc = RC_ERR_PARAM;
         }
-        /* Confgure pull-up or pull-down */
-        {
-            /* Clear the PUPDR bits for that GPIO pin number */
-            pGpioPin->pInst->PUPDR &= ~(uint32_t)(GPIO_PUPDR_Clear_Msk << GPIO_PUPDR_Pos(pGpioPin->param.pinNumber)); 
-            /* Set the PUPDR bits as required speed for that GPIO pin number */
-            pGpioPin->pInst->PUPDR |= (uint32_t)(pGpioPin->param.pinPuPdControl << GPIO_PUPDR_Pos(pGpioPin->param.pinNumber));
+        if (rc == RC_OK) {
+            /* Configure the pin speed */
+            if (pGpioPin->param.pinSpeed <= VERY_HIGH) {
+                /* Clear the OSPEEDR bits for that GPIO pin number */
+                pGpioPin->pInst->OSPEEDR &= ~(uint32_t)(GPIO_OSPEEDR_Clear_Msk << GPIO_OSPEEDR_Pos(pGpioPin->param.pinNumber)); 
+                /* Set the OSPEEDR bits as required speed for that GPIO pin number */
+                pGpioPin->pInst->OSPEEDR |= (uint32_t)(pGpioPin->param.pinSpeed << GPIO_OSPEEDR_Pos(pGpioPin->param.pinNumber));
+            }
+            else {
+                rc = RC_ERR_PARAM;
+            }
         }
-        /* Configure the output type */
-        {
-            /* Clear the OTYPER bits for that GPIO pin number */
-            pGpioPin->pInst->OTYPER &= ~(uint32_t)(GPIO_OTYPER_Clear_Msk << pGpioPin->param.pinNumber); 
-            /* Set the PUPDR bits as required speed for that GPIO pin number */
-            pGpioPin->pInst->OTYPER |= (uint32_t)(pGpioPin->param.pinOpType << pGpioPin->param.pinNumber);
+        if (rc == RC_OK) {
+            /* Confgure pull-up or pull-down */
+            if (pGpioPin->param.pinPuPdControl <= PULL_DOWN) {
+                /* Clear the PUPDR bits for that GPIO pin number */
+                pGpioPin->pInst->PUPDR &= ~(uint32_t)(GPIO_PUPDR_Clear_Msk << GPIO_PUPDR_Pos(pGpioPin->param.pinNumber)); 
+                /* Set the PUPDR bits as required speed for that GPIO pin number */
+                pGpioPin->pInst->PUPDR |= (uint32_t)(pGpioPin->param.pinPuPdControl << GPIO_PUPDR_Pos(pGpioPin->param.pinNumber));
+            }
+            else {
+                rc = RC_ERR_PARAM;
+            }
         }
-        /* Configure the alternate function register */
-        if (pGpioPin->param.pinOpType == ALTFUN) {
-            /* Clear the AFR bits for that GPIO pin number */
-            pGpioPin->pInst->AFR[GPIO_AFR_Index(pGpioPin->param.pinNumber)] 
-                    &= ~(uint32_t)(GPIO_AFR_Clear_Msk << GPIO_AFR_Pos(pGpioPin->param.pinNumber));
-            
-            /* Set the AFR bits as required alternate function for that GPIO pin number */
-            pGpioPin->pInst->AFR[GPIO_AFR_Index(pGpioPin->param.pinNumber)] 
-                    |= (uint32_t)(pGpioPin->param.pinAltFunMode << GPIO_AFR_Pos(pGpioPin->param.pinNumber));
+        if (rc == RC_OK) {
+            /* Configure the output type */
+            if (pGpioPin->param.pinOpType <= OPEN_DRAIN) {
+                /* Clear the OTYPER bits for that GPIO pin number */
+                pGpioPin->pInst->OTYPER &= ~(uint32_t)(GPIO_OTYPER_Clear_Msk << pGpioPin->param.pinNumber); 
+                /* Set the PUPDR bits as required speed for that GPIO pin number */
+                pGpioPin->pInst->OTYPER |= (uint32_t)(pGpioPin->param.pinOpType << pGpioPin->param.pinNumber);
+            }
+            else {
+                rc = RC_ERR_PARAM;
+            }
+        }
+        if (rc == RC_OK) {
+            /* Configure the alternate function register */
+            if (pGpioPin->param.pinMode == ALTFUN) {
+                
+                if (pGpioPin->param.pinAltFunMode <= AF15) {
+                    /* Clear the AFR bits for that GPIO pin number */
+                    pGpioPin->pInst->AFR[GPIO_AFR_Index(pGpioPin->param.pinNumber)] 
+                            &= ~(uint32_t)(GPIO_AFR_Clear_Msk << GPIO_AFR_Pos(pGpioPin->param.pinNumber));
+                    
+                    /* Set the AFR bits as required alternate function for that GPIO pin number */
+                    pGpioPin->pInst->AFR[GPIO_AFR_Index(pGpioPin->param.pinNumber)] 
+                            |= (uint32_t)(pGpioPin->param.pinAltFunMode << GPIO_AFR_Pos(pGpioPin->param.pinNumber));
+                }
+                else {
+                    rc = RC_ERR_PARAM;
+                }
+            }
         }
     }
     
