@@ -384,9 +384,9 @@
           <GroupName>Application</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>led_chaser.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\source\application\main.c</FilePath>
+              <FilePath>..\..\source\application\gpio_examples\led_chaser.c</FilePath>
             </File>
           </Files>
         </Group>
