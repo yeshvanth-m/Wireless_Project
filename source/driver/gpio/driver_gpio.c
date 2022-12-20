@@ -174,3 +174,50 @@ common_rc_t driver_gpio_init (driver_gpio_pinConfig_t* pGpioPin)
     
     return rc;
 }
+
+common_rc_t driver_gpio_deInit (driver_gpio_pinConfig_t* pGpioPin)
+{
+    /* Return code is OK by default */
+    common_rc_t rc = RC_OK;
+    
+    /* Disable the peripheral clock */
+    rc = driver_gpio_clock_control(pGpioPin->pInst, DISABLE);
+    
+    return rc;
+}
+
+void driver_gpio_write_port (GPIO_TypeDef* pGpioInst, uint32_t data)
+{
+    /* Write into the GPIO port */
+    pGpioInst->ODR = data;
+}
+
+uint32_t driver_gpio_read_port (GPIO_TypeDef* pGpioInst)
+{
+    /* Read from the GPIO port */
+    return pGpioInst->IDR;
+}
+
+void driver_gpio_write_pin (GPIO_TypeDef* pGpioInst, bool isSet, uint8_t pin_number)
+{
+    if (isSet) {
+        /* Set the GPIO port pin in BSRR */
+        pGpioInst->BSRR |= (uint32_t)(SET << pin_number);
+    }
+    else {
+        /* Clear the GPIO port pin in BSRR */
+        pGpioInst->BSRR &= ~(uint32_t)(SET << pin_number);
+    }
+}
+
+bool driver_gpio_read_pin (GPIO_TypeDef* pGpioInst, uint8_t pin_number)
+{
+    /* Read the GPIO port pin from BSRR */
+    return (bool)(pGpioInst->BSRR & (uint32_t)(SET << pin_number));
+}
+
+void driver_gpio_toggle_pin (GPIO_TypeDef* pGpioInst, uint8_t pin_number)
+{
+    /* Toggle the GPIO port pin in BSRR */
+    pGpioInst->BSRR ^= (uint32_t)(SET << pin_number);
+}

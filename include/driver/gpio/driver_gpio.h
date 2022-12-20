@@ -143,18 +143,79 @@ typedef enum {
  *        True: enable peripheral clock
  *        False: disable peripheral clock
  *
- * @returns None
+ * @returns RC - Return Code
  */
 common_rc_t driver_gpio_clock_control (GPIO_TypeDef* pGpioInst, bool bEnable);
 
 /**
- * @brief Configure a GPIO pin
+ * @brief Initialize a GPIO pin
  *
  * @param pGpio - Pointer
  *        Pointer to the GPIO pin configurations
  *
- * @returns None
+ * @returns RC - Return Code
  */
 common_rc_t driver_gpio_init (driver_gpio_pinConfig_t* pGpioPin);
+
+/**
+ * @brief De-initialize a GPIO pin
+ *
+ * @param pGpio - Pointer
+ *        Pointer to the GPIO pin configurations
+ *
+ * @returns RC - Return Code
+ */
+common_rc_t driver_gpio_deInit (driver_gpio_pinConfig_t* pGpioPin);
+
+/**
+ * @brief Write into a GPIO Port
+ *
+ * @param pGpioInst - Pointer
+ *        Pointer to the GPIO instance
+ *
+ * @returns None
+ */
+void driver_gpio_write_port (GPIO_TypeDef* pGpioInst, uint32_t data);
+
+/**
+ * @brief Read a GPIO port
+ *
+ * @param pGpioInst - Pointer
+ *        Pointer to the GPIO instance
+ *
+ * @returns Data read from the input data register
+ */
+uint32_t driver_gpio_read_port (GPIO_TypeDef* pGpioInst);
+
+/**
+ * @brief Write into a GPIO port pin
+ *
+ * @param pGpioInst - Pointer
+ *        Pointer to the GPIO instance
+ *
+ * @param isSet - set or clear the bit
+ *
+ * @param pin_number
+ *        Pin number of the GPIO instance
+ *
+ * @returns None
+ */
+void driver_gpio_write_pin (GPIO_TypeDef* pGpioInst, bool isSet, uint8_t pin_number);
+
+/**
+ * @brief Read a GPIO port pin
+ *
+ * @param pGpioInst - Pointer
+ *        Pointer to the GPIO instance
+ *
+ * @param pin_number
+ *        Pin number of the GPIO instance
+ *
+ * @returns Data read from the input data register
+ */
+bool driver_gpio_read_pin (GPIO_TypeDef* pGpioInst, uint8_t pin_number);
+
+
+void driver_gpio_toggle_pin (GPIO_TypeDef* pGpioInst, uint8_t pin_number);
 
 #endif  /* _DRIVER_GPIO_H_ */
