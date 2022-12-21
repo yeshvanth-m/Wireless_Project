@@ -186,16 +186,29 @@ common_rc_t driver_gpio_deInit (driver_gpio_pinConfig_t* pGpioPin)
     return rc;
 }
 
-void driver_gpio_write_port (GPIO_TypeDef* pGpioInst, uint32_t data)
+void driver_gpio_write_port (GPIO_TypeDef* pGpioInst, uint16_t data)
 {
     /* Write into the GPIO port */
     pGpioInst->ODR = data;
 }
 
-uint32_t driver_gpio_read_port (GPIO_TypeDef* pGpioInst)
+uint16_t driver_gpio_read_port (GPIO_TypeDef* pGpioInst)
 {
     /* Read from the GPIO port */
-    return pGpioInst->IDR;
+    return (uint16_t) pGpioInst->IDR;
+}
+
+void driver_gpio_write_port_masked (GPIO_TypeDef* pGpioInst, uint16_t data, uint16_t mask)
+{
+    /* Write into the GPIO port with masked bits */
+    pGpioInst->ODR &= ~mask;
+    pGpioInst->ODR |= (data & mask);
+}
+
+uint16_t driver_gpio_read_port_masked (GPIO_TypeDef* pGpioInst, uint16_t mask)
+{
+    /* Read from the GPIO port */
+    return (pGpioInst->IDR & mask);
 }
 
 void driver_gpio_write_pin (GPIO_TypeDef* pGpioInst, bool isSet, uint8_t pin_number)

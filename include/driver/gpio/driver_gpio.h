@@ -173,9 +173,11 @@ common_rc_t driver_gpio_deInit (driver_gpio_pinConfig_t* pGpioPin);
  * @param pGpioInst - Pointer
  *        Pointer to the GPIO instance
  *
+ * @param data - data to be written into the GPIO port
+ *
  * @returns None
  */
-void driver_gpio_write_port (GPIO_TypeDef* pGpioInst, uint32_t data);
+void driver_gpio_write_port (GPIO_TypeDef* pGpioInst, uint16_t data);
 
 /**
  * @brief Read a GPIO port
@@ -185,7 +187,33 @@ void driver_gpio_write_port (GPIO_TypeDef* pGpioInst, uint32_t data);
  *
  * @returns Data read from the input data register
  */
-uint32_t driver_gpio_read_port (GPIO_TypeDef* pGpioInst);
+uint16_t driver_gpio_read_port (GPIO_TypeDef* pGpioInst);
+
+/**
+ * @brief Write into a GPIO Port masked
+ *
+ * @param pGpioInst - Pointer
+ *        Pointer to the GPIO instance
+ *
+ * @param data - data to be written into the GPIO port
+ *
+ * @param mask - bits to be masked
+ *
+ * @returns None
+ */
+void driver_gpio_write_port_masked (GPIO_TypeDef* pGpioInst, uint16_t data, uint16_t mask);
+
+/**
+ * @brief Read a GPIO port masked
+ *
+ * @param pGpioInst - Pointer
+ *        Pointer to the GPIO instance
+ *
+ * @param mask - bits to be masked
+ *
+ * @returns Data read from the input data register
+ */
+uint16_t driver_gpio_read_port_masked (GPIO_TypeDef* pGpioInst, uint16_t mask);
 
 /**
  * @brief Write into a GPIO port pin
@@ -215,7 +243,16 @@ void driver_gpio_write_pin (GPIO_TypeDef* pGpioInst, bool isSet, uint8_t pin_num
  */
 bool driver_gpio_read_pin (GPIO_TypeDef* pGpioInst, uint8_t pin_number);
 
-
+/**
+ * @brief Toggle a GPIO pin
+ *
+ * @param pGpioInst - Pointer
+ *        Pointer to the GPIO instance
+ *
+ * @param pin_number
+ *        Pin number of the GPIO instance
+ *
+ */
 void driver_gpio_toggle_pin (GPIO_TypeDef* pGpioInst, uint8_t pin_number);
 
 #endif  /* _DRIVER_GPIO_H_ */
