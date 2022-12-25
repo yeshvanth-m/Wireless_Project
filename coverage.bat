@@ -2,4 +2,4 @@
 
 mkdir reports\coverage
 
-python -m gcovr -gk -r . --config gcovr_config.cfg
+python -m gcovr -gk -r . --config gcovr_config.cfg --gcov-ignore-parse-errors

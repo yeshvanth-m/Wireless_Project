@@ -133,6 +133,8 @@ typedef enum {
 #define GPIO_AFR_Pos(number)   ((number % 8u) * 4u)
 #define GPIO_AFR_Index(number) (number / 8u)
 
+/* Public function prototypes used by GPIO peripheral */
+
 /**
  * @brief Clock control for the GPIO peripheral
  *
@@ -251,6 +253,8 @@ bool driver_gpio_read_pin (GPIO_TypeDef* pGpioInst, uint8_t pin_number);
  *
  * @param pin_number
  *        Pin number of the GPIO instance
+ *
+ * @returns None
  *
  */
 void driver_gpio_toggle_pin (GPIO_TypeDef* pGpioInst, uint8_t pin_number);
