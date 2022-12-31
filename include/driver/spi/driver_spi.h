@@ -1,8 +1,8 @@
 /********************************************************************************
-* @file     driver_rcc.h                                                        *
-* @brief    Clock config Header File                                            *
+* @file     driver_spi.h                                                        *
+* @brief    SPI Driver Header File                                              *
 * @author   Yeshvanth M  <yeshvanthmuniraj@gmail.com>                           *
-* @date     13-Dec-2022                                                         *
+* @date     31-Dec-2022                                                         *
 *********************************************************************************
 *                                                                               *
 * This program is free software: you can redistribute it and/or modify it       *
@@ -20,49 +20,26 @@
 *                                                                               *
 ********************************************************************************/
 
-#ifndef _DRIVER_RCC_H_
-#define _DRIVER_RCC_H_
+#ifndef _DRIVER_SPI_H_
+#define _DRIVER_SPI_H_
 
 #include "stm32f4xx.h"
 #include "common/common_def.h"
 #include <stdbool.h>
 
-/* Structure provided by RCC driver to application */
+/* Structure provided by SPI driver to HAL */
 
-/** @brief RCC config structure used by 
-    the application to configure the system clock */
+/** @brief SPI config structure used to configure a SPI peripheral */
+
 typedef struct {
-    uint8_t clockOption;        /*< possible values from @rcc_clockOptions_t >*/
-    uint8_t clockSource;        /*< possible values from @rcc_clockSources_t >*/
-} driver_rcc_clock_t;
+    uint8_t spiConfig;     /*< possible values from @spi_config_t  >*/
+    uint8_t spiMode;       /*< possible values from @spi_mode_t    >*/
+    uint8_t	spiCpol;       /*< possible values from @spi_clkpol_t  >*/
+    uint8_t spiCpha;       /*< possible values from @spi_clkpha_t  >*/
+    uint8_t spiDff;        /*< possible values from @spi_dff_t     >*/
+    uint8_t spiSsm;        /*< possible values from @spi_ssm_t     >*/
+    uint8_t spiCrcEn;      /*< possible values from @spi_crc_t     >*/
+    uint8_t spiSpeed;      /*< possible values from @spi_speed_t   >*/
+} driver_spi_t;
 
-/** @brief RCC config structure used by 
-    the application to configure RCC */
-typedef struct {
-	driver_rcc_clock_t param;	/*< Holds RCC clock configuration parameters >*/
-} driver_gpio_clockConfig_t;
-
-/* Enums for the configurable RCC parameters */
-
-/** @brief Available clock sources for the MCU */
-typedef enum {
-    LOW_POWER,          /*< Lower clock config  >*/
-    HIGH_PERFORMANCE,   /*< High performance clock config  >*/
-} rcc_clockOptions_t;
-
-typedef enum {
-    INTERNAL,       /* High Speed Internal (RC Osc) clock config  */
-    EXTERNAL,       /* High Speed External (Crystal) clock config */
-} rcc_clockSources_t;
-
-/**
- * @brief Configure clock for the MCU
- *
- * @param pClockConfig - Pointer
- *        Pointer to the clock configurations
- *
- * @returns RC - Return Code
- */
-
-
-#endif  /* _DRIVER_GPIO_H_ */
+#endif

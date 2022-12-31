@@ -34,9 +34,9 @@
     the application to configure a Pin */
 typedef struct {
     uint8_t port;
-    uint8_t number;
+    uint8_t pin;
     uint8_t func;
-} hal_gpio_pin_t;
+} hal_gpio_t;
 
 
 /* Enums for the configurable GPIO parameters */
@@ -82,6 +82,18 @@ typedef enum {
     SWITCH,
 } hal_gpioFunc_t;
 
-void hal_gpio_enable(hal_gpio_pin_t* pin);
+common_rc_t hal_gpio_config_port(hal_gpio_t* port, bool bEnable, bool bReset);
+
+common_rc_t hal_gpio_config_pin(hal_gpio_t* pin);
+
+uint16_t hal_gpio_read_port (hal_gpio_t* gpio, uint16_t mask);
+
+void hal_gpio_write_port (hal_gpio_t* gpio, uint16_t data, uint16_t mask);    
+
+bool hal_gpio_read_pin (hal_gpio_t* gpio);
+
+void hal_gpio_write_pin (hal_gpio_t* gpio, bool bSet);
+
+void hal_gpio_toggle_pin (hal_gpio_t* gpio);
 
 #endif  /* _HAL_GPIO_H_ */

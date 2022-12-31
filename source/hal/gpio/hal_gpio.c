@@ -24,34 +24,115 @@
 
 static GPIO_TypeDef* map_gpio_port(uint8_t port);
 
-void hal_gpio_enable(hal_gpio_pin_t* pin)
+common_rc_t hal_gpio_config_port (hal_gpio_t* gpio, bool bEnable, bool bReset)
 {
+    common_rc_t rc;
+    driver_gpio_pinConfig_t gpioPort = 
+    { 
+        .pInst = map_gpio_port(gpio->port)
+    };
+    
+    if (bReset)
+    {
+        rc = driver_gpio_reset(gpioPort.pInst);
+    }
+    else
+    {
+        if (bEnable)
+        {
+            rc = driver_gpio_peripheral_config(&gpioPort, ENABLE);
+        }
+        else
+        {
+            rc = driver_gpio_peripheral_config(&gpioPort, DISABLE);
+        }
+    }
+    
+    return rc;
+}
+
+common_rc_t hal_gpio_config_pin (hal_gpio_t* gpio)
+{
+    common_rc_t rc = RC_OK;
     driver_gpio_pinConfig_t gpioPin;
     
-    gpioPin.pInst = map_gpio_port(pin->port);
-    gpioPin.param.pinNumber = pin->number;
+    gpioPin.pInst = map_gpio_port(gpio->port);
+    gpioPin.param.pinNumber = gpio->pin;
+    gpioPin.param.pinOpType = PUSH_PULL;
+    gpioPin.param.pinAltFunMode = AF0;
     
-    switch (pin->func) 
+    switch (gpio->func)
     {
         case LED:
         {
             gpioPin.param.pinMode = OUTPUT;
             gpioPin.param.pinSpeed = LOW;
-            gpioPin.param.pinOpType = PUSH_PULL;
             gpioPin.param.pinPuPdControl = NO_PUPD;
             break;
         }
         case ONBOARD_BUTTON:
+        case EXT_BUTTON_PU:
         {
-            
+            gpioPin.param.pinMode = INPUT;
+            gpioPin.param.pinSpeed = HIGH;
+            gpioPin.param.pinPuPdControl = PULL_UP;
             break;
         }
         case EXT_BUTTON_PD:
-        
+        {
+            gpioPin.param.pinMode = INPUT;
+            gpioPin.param.pinSpeed = HIGH;
+            gpioPin.param.pinPuPdControl = PULL_DOWN;
+            break;
+        }
+        case SWITCH:
+        {
+            gpioPin.param.pinMode = INPUT;
+            gpioPin.param.pinSpeed = HIGH;
+            gpioPin.param.pinPuPdControl = NO_PUPD;
+            break;
+        }
+        default:
+        {
+            rc = RC_ERR_PARAM;
+            break;
+        }
     }
+    
+    if (rc == RC_OK)
+    {
+        driver_gpio_config_pin(&gpioPin);
+    }
+    
+    return rc;
 }
 
-static GPIO_TypeDef* map_gpio_port(uint8_t port)
+uint16_t hal_gpio_read_port (hal_gpio_t* gpio, uint16_t mask)
+{
+    return driver_gpio_read_port (map_gpio_port (gpio->port), mask);
+}
+
+void hal_gpio_write_port (hal_gpio_t* gpio, uint16_t data, uint16_t mask)
+{
+    driver_gpio_write_port (map_gpio_port (gpio->port), data, mask);
+}    
+
+bool hal_gpio_read_pin (hal_gpio_t* gpio)
+{
+    return driver_gpio_read_pin (map_gpio_port (gpio->port), gpio->pin);
+}
+
+void hal_gpio_write_pin (hal_gpio_t* gpio, bool bSet)
+{
+    driver_gpio_write_pin (map_gpio_port (gpio->port), bSet, gpio->pin);
+}
+
+void hal_gpio_toggle_pin (hal_gpio_t* gpio)
+{
+    driver_gpio_toggle_pin (map_gpio_port (gpio->port), gpio->pin);
+}
+
+static GPIO_TypeDef* map_gpio_port (uint8_t port)
 {
     GPIO_TypeDef* gpioInst;
     

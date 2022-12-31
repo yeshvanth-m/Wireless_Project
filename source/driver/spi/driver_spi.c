@@ -1,8 +1,8 @@
 /********************************************************************************
-* @file     driver_gpio.c                                                       *
-* @brief    File includes implementations of clock config functions.            *
+* @file     driver_spi.c                                                        *
+* @brief    File contains implementations of SPI driver functions.              *
 * @author   Yeshvanth M  <yeshvanthmuniraj@gmail.com>                           *
-* @date     25-Dec-2022                                                         *
+* @date     31-Dec-2022                                                         *
 *********************************************************************************
 *                                                                               *
 * This program is free software: you can redistribute it and/or modify it       *
@@ -20,4 +20,4 @@
 *                                                                               *
 ********************************************************************************/
 
-#include "/driver/rcc/driver_rcc.h"
+#include "/driver/spi/driver_spi.h"

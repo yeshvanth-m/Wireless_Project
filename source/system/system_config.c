@@ -1,8 +1,8 @@
 /********************************************************************************
-* @file     led_chaser.c                                                        *
-* @brief    GPIO example implementing an LED chaser                             *
+* @file     system_config.c                                                     *
+* @brief    System Config Implementations File                                  *
 * @author   Yeshvanth M  <yeshvanthmuniraj@gmail.com>                           *
-* @date     19-Dec-2022                                                         *
+* @date     13-Dec-2022                                                         *
 *********************************************************************************
 *                                                                               *
 * This program is free software: you can redistribute it and/or modify it       *
@@ -20,38 +20,22 @@
 *                                                                               *
 ********************************************************************************/
 
-#include "/hal/gpio/hal_gpio.h"
+#include "system/system_config.h"
 
-static hal_gpio_t led_array;
+/***************************************************************************************
+* Configure the system configuration:
+* 1. If external clock source is selected then enable it and wait till it becomes ready
+* 2. If internal clock source is selected then see how we can enable it - ???
+*
+*
+*
+*
+*
+*
+*
+****************************************************************************************/
 
-static void setup_led_array(void)
+void system_config_init(system_config_t cfg, system_clock_source_t clk)
 {
-    led_array.port = PORTA;
-    
-    /* Enable the port */
-    hal_gpio_config_port (&led_array, true, false);
-    
-    for (uint8_t pin = 0u; pin < 7u; pin++)
-    {
-        led_array.pin = pin;
-        led_array.func = LED;
-        hal_gpio_config_pin (&led_array);
-    }
-}
-
-int main()
-{
-    uint8_t led_bits_array;
-    uint16_t mask;
-    led_bits_array = 1u;
-    mask = 0xFu;
-    
-    setup_led_array();
-    
-    while (1) {
-        hal_gpio_write_port (&led_array, (uint16_t)led_bits_array, mask);
-        led_bits_array = (uint8_t)(led_bits_array << 1u);
-        delay();
-    }
     
 }

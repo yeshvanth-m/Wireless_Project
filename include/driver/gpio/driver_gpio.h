@@ -38,13 +38,13 @@ typedef struct {
     uint8_t pinPuPdControl;    /*< possible values from @gpio_pinPuPd_t    >*/
     uint8_t pinOpType;         /*< possible values from @gpio_pinOpTypes_t >*/
     uint8_t pinAltFunMode;     /*< possible values from @gpio_pinAltFun_t  >*/
-} driver_gpio_pin_t;
+} driver_gpio_t;
 
 /** @brief GPIO config structure used by 
     the application to configure a GPIO Pin */
 typedef struct {
 	GPIO_TypeDef *pInst;	    /* GPIO instance */
-	driver_gpio_pin_t param;	/* Holds GPIO pin configuration parameters */
+	driver_gpio_t param;	    /* Holds GPIO pin configuration parameters */
 } driver_gpio_pinConfig_t;
 
 /* Enums for the configurable GPIO parameters */
@@ -149,6 +149,8 @@ typedef enum {
  */
 common_rc_t driver_gpio_clock_control (GPIO_TypeDef* pGpioInst, bool bEnable);
 
+common_rc_t driver_gpio_reset (GPIO_TypeDef* pGpioInst);
+
 /**
  * @brief Initialize a GPIO pin
  *
@@ -157,39 +159,9 @@ common_rc_t driver_gpio_clock_control (GPIO_TypeDef* pGpioInst, bool bEnable);
  *
  * @returns RC - Return Code
  */
-common_rc_t driver_gpio_init (driver_gpio_pinConfig_t* pGpioPin);
+common_rc_t driver_gpio_peripheral_config (driver_gpio_pinConfig_t* pGpioPin, bool bEnable);
 
-/**
- * @brief De-initialize a GPIO pin
- *
- * @param pGpio - Pointer
- *        Pointer to the GPIO pin configurations
- *
- * @returns RC - Return Code
- */
-common_rc_t driver_gpio_deInit (driver_gpio_pinConfig_t* pGpioPin);
-
-/**
- * @brief Write into a GPIO Port
- *
- * @param pGpioInst - Pointer
- *        Pointer to the GPIO instance
- *
- * @param data - data to be written into the GPIO port
- *
- * @returns None
- */
-void driver_gpio_write_port (GPIO_TypeDef* pGpioInst, uint16_t data);
-
-/**
- * @brief Read a GPIO port
- *
- * @param pGpioInst - Pointer
- *        Pointer to the GPIO instance
- *
- * @returns Data read from the input data register
- */
-uint16_t driver_gpio_read_port (GPIO_TypeDef* pGpioInst);
+void driver_gpio_config_pin (driver_gpio_pinConfig_t* pGpioPin);
 
 /**
  * @brief Write into a GPIO Port masked
@@ -203,7 +175,7 @@ uint16_t driver_gpio_read_port (GPIO_TypeDef* pGpioInst);
  *
  * @returns None
  */
-void driver_gpio_write_port_masked (GPIO_TypeDef* pGpioInst, uint16_t data, uint16_t mask);
+void driver_gpio_write_port (GPIO_TypeDef* pGpioInst, uint16_t data, uint16_t mask);
 
 /**
  * @brief Read a GPIO port masked
@@ -215,7 +187,7 @@ void driver_gpio_write_port_masked (GPIO_TypeDef* pGpioInst, uint16_t data, uint
  *
  * @returns Data read from the input data register
  */
-uint16_t driver_gpio_read_port_masked (GPIO_TypeDef* pGpioInst, uint16_t mask);
+uint16_t driver_gpio_read_port (GPIO_TypeDef* pGpioInst, uint16_t mask);
 
 /**
  * @brief Write into a GPIO port pin
