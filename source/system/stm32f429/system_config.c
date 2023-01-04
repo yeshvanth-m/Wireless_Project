@@ -1,8 +1,8 @@
 /********************************************************************************
-* @file     driver_spi.c                                                        *
-* @brief    File contains implementations of SPI driver functions.              *
+* @file     system_config.c                                                     *
+* @brief    System Config Implementations File                                  *
 * @author   Yeshvanth M  <yeshvanthmuniraj@gmail.com>                           *
-* @date     31-Dec-2022                                                         *
+* @date     13-Dec-2022                                                         *
 *********************************************************************************
 *                                                                               *
 * This program is free software: you can redistribute it and/or modify it       *
@@ -20,14 +20,22 @@
 *                                                                               *
 ********************************************************************************/
 
-#include "/driver/spi/driver_spi.h"
+#include "system/system_config.h"
 
-common_rc_t driver_spi_enable (driver_spi_t* spiInit)
-{
-    
-}
+/***************************************************************************************
+* Configure the system configuration:
+* 1. If external clock source is selected then enable it and wait till it becomes ready
+* 2. If internal clock source is selected then see how we can enable it - ???
+*
+*
+*
+*
+*
+*
+*
+****************************************************************************************/
 
-common_rc_t driver_spi_config (driver_spi_t* spiConfig)
+void system_config_init(system_config_t cfg, system_clock_source_t clk)
 {
     
 }
