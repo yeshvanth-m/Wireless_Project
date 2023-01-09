@@ -23,18 +23,13 @@
 #ifndef _SYSTEM_CONFIG_H_
 #define _SYSTEM_CONFIG_H_
 
+#include "stm32f4xx.h"
+
 typedef enum {
     LOW_POWER,
     HIGH_PERFORMANCE
 } system_config_t;
 
-typedef enum {
-    INTERNAL,
-    EXTERNAL,
-} system_clock_source_t;
-
-void system_config_init(system_config_t cfg, system_clock_source_t clk);
-
-
+void system_config_init(system_config_t cfg);
 
 #endif
