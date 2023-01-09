@@ -21,6 +21,7 @@
 ********************************************************************************/
 
 #include "/hal/gpio/hal_gpio.h"
+#include "/system/system_config.h"
 
 static GPIO_TypeDef* map_gpio_port(uint8_t port);
 
@@ -59,7 +60,6 @@ common_rc_t hal_gpio_config_pin (hal_gpio_t* gpio)
     gpioPin.pInst = map_gpio_port(gpio->port);
     gpioPin.param.pinNumber = gpio->pin;
     gpioPin.param.pinOpType = PUSH_PULL;
-    gpioPin.param.pinAltFunMode = AF0;
     
     switch (gpio->func)
     {
@@ -90,6 +90,27 @@ common_rc_t hal_gpio_config_pin (hal_gpio_t* gpio)
             gpioPin.param.pinMode = INPUT;
             gpioPin.param.pinSpeed = HIGH;
             gpioPin.param.pinPuPdControl = NO_PUPD;
+            break;
+        }
+        case CLOCK_OUT:
+        {
+            gpioPin.param.pinMode = ALTFUN;
+            gpioPin.param.pinSpeed = VERY_HIGH;
+            gpioPin.param.pinPuPdControl = NO_PUPD;
+            gpioPin.param.pinAltFunMode = AF0;
+            
+            if ((gpioPin.param.pinNumber == GPIO_PIN_8) && (gpioPin.pInst == GPIOA))
+            {
+                system_config_mco(MCO1);
+            }
+            else if ((gpioPin.param.pinNumber == GPIO_PIN_9) && (gpioPin.pInst == GPIOC))
+            {
+                system_config_mco(MCO2);
+            }
+            else
+            {
+                rc = RC_ERR_PARAM;
+            }
             break;
         }
         default:

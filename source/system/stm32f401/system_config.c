@@ -81,6 +81,9 @@
 #define APB1_PRESCLR_HP            RCC_CFGR_PPRE1_DIV2
 #define APB2_PRESCLR_HP            RCC_CFGR_PPRE2_DIV1
 
+#define RCC_CFGR_MCO1PRE_DIV_4     0x06u << RCC_CFGR_MCO1PRE_Pos
+#define RCC_CFGR_MCO2PRE_DIV_4     0x06u << RCC_CFGR_MCO2PRE_Pos
+
 /***************************************************************************************/
 
 void system_config_init(system_config_t cfg)
@@ -141,4 +144,16 @@ void system_config_init(system_config_t cfg)
     
     /* Call the system core clock update to update the global clock variable (CMSIS) */
     SystemCoreClockUpdate();
+}
+
+void system_config_mco (system_config_clkOut_t clkOut)
+{
+    if (clkOut == MCO1)
+    {
+        RCC->CFGR |= (RCC_CFGR_MCO1 | RCC_CFGR_MCO1PRE_DIV_4);
+    }
+    else if (clkOut == MCO2)
+    {
+        RCC->CFGR |= (RCC_CFGR_MCO2 | RCC_CFGR_MCO2PRE_DIV_4);
+    }
 }

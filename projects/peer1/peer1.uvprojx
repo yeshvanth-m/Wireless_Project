@@ -385,9 +385,9 @@
           <GroupName>Application</GroupName>
           <Files>
             <File>
-              <FileName>led_chaser_sample.c</FileName>
+              <FileName>clock_test_sample.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\source\application\gpio_examples\led_chaser_sample.c</FilePath>
+              <FilePath>..\..\source\application\clock_test\clock_test_sample.c</FilePath>
             </File>
           </Files>
         </Group>

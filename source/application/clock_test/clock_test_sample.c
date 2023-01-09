@@ -1,8 +1,8 @@
 /********************************************************************************
-* @file     system_config.h                                                     *
-* @brief    System Config Header File                                           *
+* @file     clock_test_sample.c                                                 *
+* @brief    An example implementing MCO clock out                               *
 * @author   Yeshvanth M  <yeshvanthmuniraj@gmail.com>                           *
-* @date     13-Dec-2022                                                         *
+* @date     09-Jan-2023                                                         *
 *********************************************************************************
 *                                                                               *
 * This program is free software: you can redistribute it and/or modify it       *
@@ -20,23 +20,25 @@
 *                                                                               *
 ********************************************************************************/
 
-#ifndef _SYSTEM_CONFIG_H_
-#define _SYSTEM_CONFIG_H_
+#include "system/system_config.h"
+#include "/hal/gpio/hal_gpio.h"
 
-#include "stm32f4xx.h"
-
-typedef enum {
-    LOW_POWER,
-    HIGH_PERFORMANCE
-} system_config_t;
-
-typedef enum {
-    MCO1,
-    MCO2,
-} system_config_clkOut_t;
-
-void system_config_init(system_config_t cfg);
-
-void system_config_mco (system_config_clkOut_t clkOut);
-
-#endif
+int main()
+{
+    system_config_t config = LOW_POWER;
+    hal_gpio_t gpio = 
+    {
+        .pin = PIN_8,
+        .port = PORTA,
+        .func = CLOCK_OUT,
+    };
+    
+    system_config_init (config);
+    hal_gpio_config_port (&gpio, true, false);
+    hal_gpio_config_pin (&gpio);
+    
+    /* For LOW_POWER, SYSCLK is 64 MHz and HCLK is 8 MHz 
+       The MCO1 outputs 64 MHz / 4 = 16 MHz clock in PA8 */
+    
+    for(;;);
+}

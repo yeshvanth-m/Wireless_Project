@@ -80,6 +80,7 @@ typedef enum {
     EXT_BUTTON_PU,
     EXT_BUTTON_PD,
     SWITCH,
+    CLOCK_OUT,
 } hal_gpioFunc_t;
 
 common_rc_t hal_gpio_config_port(hal_gpio_t* port, bool bEnable, bool bReset);
