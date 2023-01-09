@@ -45,7 +45,7 @@
 /* PLL config for Low Power */
 #define PLL_M_LP                   25u
 #define PLL_N_LP                   128u
-#define PLL_P_LP                   2u
+#define PLL_P_LP                   0u
 
 /* Prescalars for low power */
 #define AHB_PRESCLR_LP             RCC_CFGR_HPRE_DIV8
@@ -74,7 +74,7 @@
 /* PLL config for High Performance */
 #define PLL_M_HP                   25u
 #define PLL_N_HP                   168u
-#define PLL_P_HP                   2u
+#define PLL_P_HP                   0u
 
 /* Prescalars for high performance */
 #define AHB_PRESCLR_HP             RCC_CFGR_HPRE_DIV1
