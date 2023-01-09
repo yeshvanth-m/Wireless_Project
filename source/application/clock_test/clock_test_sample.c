@@ -37,8 +37,15 @@ int main()
     hal_gpio_config_port (&gpio, true, false);
     hal_gpio_config_pin (&gpio);
     
-    /* For LOW_POWER, SYSCLK is 64 MHz and HCLK is 8 MHz 
-       The MCO1 outputs 64 MHz / 4 = 16 MHz clock in PA8 */
+    /* 
+    For STM32F401 Target:
+       For LOW_POWER, SYSCLK is 64 MHz and HCLK is 8 MHz 
+       The MCO1 outputs 64 MHz / 4 = 16 MHz clock in PA8. 
+    
+    For STM32F429 Target:
+       For LOW_POWER, SYSCLK is 32 MHz and HCLK is 32 MHz 
+       The MCO1 outputs 32 MHz / 4 = 8 MHz clock in PA8. 
+    */
     
     for(;;);
 }

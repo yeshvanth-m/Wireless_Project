@@ -45,7 +45,7 @@
 /* PLL config for Low Power */
 #define PLL_M_LP                   4u
 #define PLL_N_LP                   96u
-#define PLL_P_LP                   6u
+#define PLL_P_LP                   2u
 
 /* Prescalars for low power */
 #define AHB_PRESCLR_LP             RCC_CFGR_HPRE_DIV1
@@ -74,12 +74,15 @@
 /* PLL config for High Performance */
 #define PLL_M_HP                   8u
 #define PLL_N_HP                   336u
-#define PLL_P_HP                   2u
+#define PLL_P_HP                   0u
 
 /* Prescalars for high performance */
 #define AHB_PRESCLR_HP             RCC_CFGR_HPRE_DIV1
 #define APB1_PRESCLR_HP            RCC_CFGR_PPRE1_DIV4
 #define APB2_PRESCLR_HP            RCC_CFGR_PPRE2_DIV2
+
+#define RCC_CFGR_MCO1PRE_DIV_4     0x06u << RCC_CFGR_MCO1PRE_Pos
+#define RCC_CFGR_MCO2PRE_DIV_4     0x06u << RCC_CFGR_MCO2PRE_Pos
 
 /***************************************************************************************/
 
@@ -141,4 +144,16 @@ void system_config_init(system_config_t cfg)
     
     /* Call the system core clock update to update the global clock variable (CMSIS) */
     SystemCoreClockUpdate();
+}
+
+void system_config_mco (system_config_clkOut_t clkOut)
+{
+    if (clkOut == MCO1)
+    {
+        RCC->CFGR |= (RCC_CFGR_MCO1 | RCC_CFGR_MCO1PRE_DIV_4);
+    }
+    else if (clkOut == MCO2)
+    {
+        RCC->CFGR |= (RCC_CFGR_MCO2 | RCC_CFGR_MCO2PRE_DIV_4);
+    }
 }
