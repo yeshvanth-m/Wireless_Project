@@ -91,7 +91,7 @@ typedef enum {
     PCLK_DIV_256,
 } spi_speed_t;
 
-common_rc_t driver_spi_enable (driver_spi_t* spiEn, bool bEnable);
+common_rc_t driver_spi_enable (driver_spi_t* spiInit);
 
 common_rc_t driver_spi_config (driver_spi_t* spiConfig);
 

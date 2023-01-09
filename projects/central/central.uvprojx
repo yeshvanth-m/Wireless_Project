@@ -391,12 +391,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>hal</GroupName>
+          <Files>
+            <File>
+              <FileName>hal_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\source\hal\gpio\hal_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>driver</GroupName>
           <Files>
             <File>
               <FileName>driver_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\source\driver\gpio\driver_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>driver_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\source\driver\spi\driver_spi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>system</GroupName>
+          <Files>
+            <File>
+              <FileName>system_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\source\system\stm32f429\system_config.c</FilePath>
             </File>
           </Files>
         </Group>

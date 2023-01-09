@@ -151,9 +151,6 @@ static GPIO_TypeDef* map_gpio_port (uint8_t port)
         case PORTD:
             gpioInst = GPIOD;
             break;
-        case PORTD:
-            gpioInst = GPIOD;
-            break;
         case PORTE:
             gpioInst = GPIOE;
             break;

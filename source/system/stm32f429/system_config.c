@@ -23,19 +23,122 @@
 #include "system/system_config.h"
 
 /***************************************************************************************
-* Configure the system configuration:
-* 1. If external clock source is selected then enable it and wait till it becomes ready
-* 2. If internal clock source is selected then see how we can enable it - ???
+* Configure the system with the following parameters for STM32F429:
 *
-*
-*
-*
-*
-*
-*
-****************************************************************************************/
+  * @brief  System Clock Configuration for Low Power
+  *         The system Clock is configured as follow : 
+  *            System Clock source            = PLL (HSE)
+  *            SYSCLK			              = 32 MHz
+  *            HCLK			                  = 32 MHz
+  *            AHB Prescaler                  = 1
+  *            APB1 Prescaler                 = 1
+  *            APB2 Prescaler                 = 1
+  *            HSE Frequency		          = 8 MHz
+  *            PLL_M                          = 4
+  *            PLL_N                          = 96
+  *            PLL_P                          = 6
+  *            VDD(V)                         = 3.3
+  *            Main regulator output voltage  = Scale1 mode
+  *            Flash Latency(WS)              = 5
+  */
 
-void system_config_init(system_config_t cfg, system_clock_source_t clk)
+/* PLL config for Low Power */
+#define PLL_M_LP                   4u
+#define PLL_N_LP                   96u
+#define PLL_P_LP                   6u
+
+/* Prescalars for low power */
+#define AHB_PRESCLR_LP             RCC_CFGR_HPRE_DIV1
+#define APB1_PRESCLR_LP            RCC_CFGR_PPRE1_DIV1
+#define APB2_PRESCLR_LP            RCC_CFGR_PPRE2_DIV1
+
+
+/*
+  * @brief  System Clock Configuration for High Performance
+  *         The system Clock is configured as follow : 
+  *            System Clock source            = PLL (HSE)
+  *            SYSCLK			              = 168 MHz
+  *            HCLK			                  = 168 MHz
+  *            AHB Prescaler                  = 1
+  *            APB1 Prescaler                 = 4
+  *            APB2 Prescaler                 = 2
+  *            HSE Frequency		          = 8 MHz
+  *            PLL_M                          = 8
+  *            PLL_N                          = 336
+  *            PLL_P                          = 2
+  *            VDD(V)                         = 3.3
+  *            Main regulator output voltage  = Scale1 mode
+  *            Flash Latency(WS)              = 5
+  */
+
+/* PLL config for High Performance */
+#define PLL_M_HP                   8u
+#define PLL_N_HP                   336u
+#define PLL_P_HP                   2u
+
+/* Prescalars for high performance */
+#define AHB_PRESCLR_HP             RCC_CFGR_HPRE_DIV1
+#define APB1_PRESCLR_HP            RCC_CFGR_PPRE1_DIV4
+#define APB2_PRESCLR_HP            RCC_CFGR_PPRE2_DIV2
+
+/***************************************************************************************/
+
+void system_config_init(system_config_t cfg)
 {
+	/********************************************************
+    1. ENABLE HSE and wait for the HSE to become Ready
+	2. Set the POWER ENABLE CLOCK and VOLTAGE REGULATOR
+	3. Configure the FLASH PREFETCH and the LATENCY Related Settings
+	4. Configure the PRESCALARS HCLK, PCLK1, PCLK2
+	5. Configure the MAIN PLL
+	6. Enable the PLL and wait for it to become ready
+	7. Select the Clock Source and wait for it to be set
+	********************************************************/
+
+	/* Enable HSE and wait for the HSE to become ready */
+	RCC->CR |= RCC_CR_HSEON;
+	while (!(RCC->CR & RCC_CR_HSERDY));
+	
+	/* Set the power enable clock and voltage regulator */
+	RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+	PWR->CR |= PWR_CR_VOS;
+	
+	
+	/* Configure the flash prefetch and the latency Related Settings */
+	FLASH->ACR = FLASH_ACR_ICEN | FLASH_ACR_DCEN | FLASH_ACR_PRFTEN | FLASH_ACR_LATENCY_5WS;
     
+    /* Configure PLL and prescsalars based on low power or high performance config */
+    if (cfg == LOW_POWER)
+    {
+        /* Configure the prescalars for HCLK, PCLK1, PCLK2 */
+        RCC->CFGR |= (AHB_PRESCLR_LP | APB1_PRESCLR_LP | APB2_PRESCLR_LP);
+
+        /*  Configure the Main PLL with divisors and clock source */
+        RCC->PLLCFGR = (PLL_M_LP << RCC_PLLCFGR_PLLM_Pos) 
+                        | (PLL_N_LP << RCC_PLLCFGR_PLLN_Pos) 
+                          | (PLL_P_LP << RCC_PLLCFGR_PLLP_Pos) 
+                            | (RCC_PLLCFGR_PLLSRC_HSE);
+    }
+    else
+    {
+        /* Configure the prescalars for HCLK, PCLK1, PCLK2 */
+        RCC->CFGR |= (AHB_PRESCLR_HP | APB1_PRESCLR_HP | APB2_PRESCLR_HP);
+
+        /*  Configure the Main PLL with divisors and clock source */
+        RCC->PLLCFGR = (PLL_M_HP << RCC_PLLCFGR_PLLM_Pos) 
+                        | (PLL_N_HP << RCC_PLLCFGR_PLLN_Pos) 
+                          | (PLL_P_HP << RCC_PLLCFGR_PLLP_Pos) 
+                            | (RCC_PLLCFGR_PLLSRC_HSE);
+    }
+
+	/* Enable the PLL and wait for it to become ready */
+	RCC->CR |= RCC_CR_PLLON;  
+	while (!(RCC->CR & RCC_CR_PLLRDY));  
+	
+	/* Select the Clock Source as PLL and wait for it to be set */
+	RCC->CFGR |= RCC_CFGR_SW_PLL; 
+	while (((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL));
+    
+    /* Call the system core clock update to update the global clock variable (CMSIS) */
+    SystemCoreClockUpdate();
 }
