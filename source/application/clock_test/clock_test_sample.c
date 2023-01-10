@@ -25,7 +25,7 @@
 
 int main()
 {
-    system_config_t config = HIGH_PERFORMANCE;
+    system_config_t config = LOW_POWER;
     hal_gpio_t gpio = 
     {
         .pin = PIN_8,
