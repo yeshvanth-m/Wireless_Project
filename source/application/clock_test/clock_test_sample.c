@@ -25,7 +25,7 @@
 
 int main()
 {
-    system_config_t config = LOW_POWER;
+    system_config_t config = HIGH_PERFORMANCE;
     hal_gpio_t gpio = 
     {
         .pin = PIN_8,
@@ -39,12 +39,18 @@ int main()
     
     /* 
     For STM32F401 Target:
-       For LOW_POWER, SYSCLK is 64 MHz and HCLK is 8 MHz 
-       The MCO1 outputs 64 MHz / 4 = 16 MHz clock in PA8. 
+        For LOW_POWER, SYSCLK is 64 MHz and HCLK is 8 MHz 
+        The MCO1 outputs 64 MHz / 4 = 16 MHz clock in PA8.
+        
+        For HIGH_PERFORMANCE, SYSCLK is 84 MHz and HCLK is also 84 MHz 
+        The MCO1 outputs 84 MHz / 4 = 21 MHz clock in PA8. 
     
     For STM32F429 Target:
-       For LOW_POWER, SYSCLK is 32 MHz and HCLK is 32 MHz 
-       The MCO1 outputs 32 MHz / 4 = 8 MHz clock in PA8. 
+        For LOW_POWER, SYSCLK is 32 MHz and HCLK is 32 MHz 
+        The MCO1 outputs 32 MHz / 4 = 8 MHz clock in PA8. 
+    
+        For HIGH_PERFORMANCE, SYSCLK is 168 MHz and HCLK is also 168 MHz 
+        The MCO1 outputs 168 MHz / 4 = 42 MHz clock in PA8. 
     */
     
     for(;;);
