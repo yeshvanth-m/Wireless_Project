@@ -31,7 +31,7 @@ static void setup_led_array(void)
     /* Enable the port */
     hal_gpio_config_port (&led_array, true, false);
     
-    for (uint8_t pin = 0u; pin < 7u; pin++)
+    for (uint8_t pin = 0u; pin <= 7u; pin++)
     {
         led_array.pin = pin;
         led_array.func = LED;
@@ -39,19 +39,28 @@ static void setup_led_array(void)
     }
 }
 
+static void delay(void)
+{
+    for(uint32_t time = 0; time < 100000; time++);
+}
+
 int main()
 {
     uint8_t led_bits_array;
     uint16_t mask;
     led_bits_array = 1u;
-    mask = 0xFu;
+    mask = 0xFFu;
     
     setup_led_array();
     
-    while (1) {
+    while (1) 
+    {
+        if (led_bits_array == 0u) 
+        {
+            led_bits_array = 1u;
+        }
         hal_gpio_write_port (&led_array, (uint16_t)led_bits_array, mask);
         led_bits_array = (uint8_t)(led_bits_array << 1u);
         delay();
     }
-    
 }
